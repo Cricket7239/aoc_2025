@@ -19,25 +19,25 @@ std::vector<std::string> split(std::string str, char delimiter)
 int main() {
 
         std::string text;
-        std::vector<std::string> ranges, ids;
+        std::vector<std::string> lines, ids;
         std::ifstream file("./input");
 
         while (getline(file, text)) {
                 if (text == "") break;
-                ranges.push_back(text);
+                lines.push_back(text);
         }
 
-	std::vector<std::vector<long long>> v;
-        for (int i = 0; i < ranges.size(); i++) {
-                auto parts = split(ranges[i], '-');
+	std::vector<std::vector<long long>> ranges;
+        for (int i = 0; i < lines.size(); i++) {
+                auto parts = split(lines[i], '-');
                 long long start = std::stoll(parts[0]);
                 long long end   = std::stoll(parts[1]);
-		v.push_back({start, end});
+		ranges.push_back({start, end});
         }
 	
-	std::sort(v.begin(), v.end());
+	std::sort(ranges.begin(), ranges.end());
 	std::vector<std::pair<long long, long long>> merged;
-	for(auto &r : v){
+	for(auto &r : ranges){
 		if(merged.empty() || merged.back().second < r[0]){
 			merged.push_back(std::make_pair(r[0], r[1]));
 		}else{
